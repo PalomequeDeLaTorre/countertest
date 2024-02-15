@@ -68,9 +68,8 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  void _reset() {
-    setState(() {
-      cont = 0;
-    });
+void _reset() {
+    setState(() => cont = 0); 
   }
+  
 }

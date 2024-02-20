@@ -74,6 +74,8 @@ class _ContenidoState extends State<Contenido> {
             ),
           ),
           Datos(),
+          Remember(),
+          SizedBox(height: 5,),
         ],
       ),
     );
@@ -88,6 +90,8 @@ class Datos extends StatefulWidget {
 }
 
 class _DatosState extends State<Datos> {
+bool showPass = true;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -122,18 +126,55 @@ class _DatosState extends State<Datos> {
           ),
           const SizedBox(height: 5,),
           TextFormField(
-            obscureText: true,
+            obscureText: showPass,
             decoration: InputDecoration(
               border: const OutlineInputBorder(),
               hintText: 'password',
               suffixIcon: IconButton(
                 icon: const Icon(Icons.remove_red_eye_outlined),
-                onPressed: () => {},
+                onPressed: () => {
+                setState((){
+                  showPass == true ? showPass = false : showPass = true;
+                  })
+                ,}
               )
             ),
           )
         ],
       ),
    );
+  }
+}
+
+class Remember extends StatefulWidget {
+  const Remember({super.key});
+
+  @override
+  State<Remember> createState() => _RememberState();
+}
+
+class _RememberState extends State<Remember> {
+  bool cheked = false;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Checkbox(
+          value : cheked,
+          onChanged: (value) => {
+            setState(() => cheked == false ? cheked = true : cheked = false,
+
+            ),
+
+          },
+        ),
+        const Text("Recordar cuenta"),
+        const Spacer(),
+        TextButton(
+          onPressed: () => (),
+          child: const Text("¿Olvido su contraseña?"),
+        ),
+      ],
+    );
   }
 }

@@ -219,12 +219,12 @@ class _RememberState extends State<Remember> {
             }),
           },
         ),
-        const Text('Recordar', style: TextStyle(fontSize: 15)),
+        const Text('Recordar cuenta', style: TextStyle(fontSize: 15)),
         const Spacer(),
         TextButton(
           onPressed: () => {},
           child: const Text(
-            'Olvidaste Contraseña?',
+            'Olvido su contraseña?',
             style: TextStyle(fontSize: 12, color: Colors.blue),
           ),
         ),

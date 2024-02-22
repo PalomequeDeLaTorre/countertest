@@ -223,8 +223,7 @@ class _RememberState extends State<Remember> {
         const Spacer(),
         TextButton(
           onPressed: () => {},
-          child: const Text(
-            'Olvido su contraseña?',
+          child: const Text('Olvido su contraseña?',
             style: TextStyle(fontSize: 12, color: Colors.blue),
           ),
         ),

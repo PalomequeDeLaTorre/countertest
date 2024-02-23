@@ -323,8 +323,6 @@ class _PoliticasPrivacidad extends StatefulWidget {
 }
 
 class _PoliticasState extends State<_PoliticasPrivacidad> {
-  bool _isChecked = false;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -355,32 +353,6 @@ class _PoliticasState extends State<_PoliticasPrivacidad> {
             ),
           ],
         ),
-        Row(
-          children: [
-            Checkbox(
-              value: _isChecked,
-              onChanged: (value) {
-                setState(() {
-                  _isChecked = value!;
-                });
-              },
-            ),
-            const Text(
-              'Acepto los términos y condiciones',
-              style: TextStyle(
-              color: Colors.black,
-              ),
-            ),
-          ],
-        ),
-        if (_isChecked)
-          const Text(
-            'Al utilizar esta aplicación, aceptas los términos y condiciones que se detallan a continuación. Estos términos abarcan tu responsabilidad como usuario, nuestras políticas de privacidad y seguridad, así como cualquier otra información relevante sobre el uso de la aplicación.',
-            textAlign: TextAlign.justify,
-            style: TextStyle(
-            color: Colors.black,
-            ),
-          ),
       ],
     );
   }

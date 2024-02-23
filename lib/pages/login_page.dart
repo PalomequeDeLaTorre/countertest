@@ -8,7 +8,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
@@ -56,8 +55,7 @@ class _ContenidoState extends State<Contenido> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Login',
+          Text('Login',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -80,7 +78,7 @@ class _ContenidoState extends State<Contenido> {
           SizedBox(
             height: 15,
           ),
-          _PoliticasPrivacidad(),
+          _Politicas(),
         ],
       ),
     );
@@ -108,7 +106,8 @@ class _DatosState extends State<Datos> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Email',
+          const Text(
+            'Email',
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
@@ -135,7 +134,7 @@ class _DatosState extends State<Datos> {
                 borderRadius: BorderRadius.circular(10.0),
                 borderSide: const BorderSide(color: Colors.black),
               ),
-              hintText: 'micorreo@micorreo.com',
+              hintText: 'micorreo@gmail.com',
             ),
           ),
           const SizedBox(
@@ -168,7 +167,7 @@ class _DatosState extends State<Datos> {
                   borderSide: const BorderSide(color: Colors.black),
                 ),
                 fillColor: Colors.blueAccent,
-                hintText: 'Password',
+                hintText: '********',
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.remove_red_eye_outlined),
                   onPressed: () => {
@@ -222,8 +221,10 @@ class _RememberState extends State<Remember> {
         const Text('Recordar cuenta', style: TextStyle(fontSize: 15)),
         const Spacer(),
         TextButton(
-          onPressed: () => {},
-          child: const Text('¿Olvidó su Contraseña?',
+          onPressed: () {
+            Navigator.pushNamed(context, '/reset_password');
+          },
+          child: const Text('Olvidó su contraseña?',
             style: TextStyle(fontSize: 12, color: Colors.blue),
           ),
         ),
@@ -250,8 +251,7 @@ class Botones extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20))),
                 backgroundColor:
                     MaterialStateProperty.all<Color>(const Color(0xff142047))),
-            child: const Text(
-              'Login',
+            child: const Text('Login',
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -260,8 +260,7 @@ class Botones extends StatelessWidget {
           height: 25,
           width: double.infinity,
         ),
-        const Text(
-          'Or login with',
+        const Text('Or login with',
           style: TextStyle(color: Color.fromARGB(255, 79, 77, 77)),
         ),
         const SizedBox(
@@ -315,14 +314,9 @@ class Botones extends StatelessWidget {
   }
 }
 
-class _PoliticasPrivacidad extends StatefulWidget {
-  const _PoliticasPrivacidad({Key? key}) : super(key: key);
+class _Politicas extends StatelessWidget {
+  const _Politicas({super.key});
 
-  @override
-  _PoliticasState createState() => _PoliticasState();
-}
-
-class _PoliticasState extends State<_PoliticasPrivacidad> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -335,8 +329,7 @@ class _PoliticasState extends State<_PoliticasPrivacidad> {
           children: [
             TextButton(
               onPressed: () => {},
-              child: const Text(
-                'Leer los ',
+              child: const Text('Leer los',
                 style: TextStyle(
                     color: Color.fromARGB(255, 232, 232, 232),
                     fontWeight: FontWeight.bold),
@@ -344,8 +337,7 @@ class _PoliticasState extends State<_PoliticasPrivacidad> {
             ),
             TextButton(
               onPressed: () => {},
-              child: const Text(
-                'Terminos y Condiciones',
+              child: const Text('Terminos y Condiciones',
                 style: TextStyle(
                     color: Color.fromARGB(255, 79, 77, 77),
                     fontWeight: FontWeight.bold),

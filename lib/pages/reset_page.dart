@@ -14,8 +14,7 @@ class ResetPasswordPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text(
-              'Ingresa el código OTP para restablecer la contraseña',
+            const Text('Restablecer la contraseña',
               style: TextStyle(fontSize: 18),
               textAlign: TextAlign.center,
             ),
@@ -26,7 +25,7 @@ class ResetPasswordPage extends StatelessWidget {
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text('Contraseña restablecida con éxito.'),
+                      content: Text('Su contraseña se ha restablecida con éxito.'),
                     ),
                   );
                 },
@@ -36,8 +35,7 @@ class ResetPasswordPage extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                 ),
-                child: const Text(
-                  'Restablecer Contraseña',
+                child: const Text('Restablecer Contraseña',
                   style: TextStyle(color: Colors.black),
                 )),
           ],
@@ -50,8 +48,8 @@ class ResetPasswordPage extends StatelessWidget {
     return TextField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        labelText: 'Código OTP',
-        hintText: 'Ingresa el código de verificación',
+        labelText: 'Código',
+        hintText: 'Código de verificación',
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),

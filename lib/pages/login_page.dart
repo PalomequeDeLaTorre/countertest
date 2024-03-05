@@ -163,7 +163,7 @@ class RegisterPage extends StatelessWidget {
               onPressed: () {
                 // Lógica para registrar un nuevo usuario
               },
-              child: Text('Registrar'),
+              child: Text('Guardar registro'),
             ),
           ],
         ),

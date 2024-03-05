@@ -1,61 +1,81 @@
+import 'package:countertest/pages/page_bienvenido.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-        body: Stack(
-      children: [
-        Fondo(),
-        Contenido(),
-      ],
-    ));
+    return Scaffold(
+      body: Stack(
+        children: [
+          Fondo(),
+          Contenido(
+            emailController: emailController,
+            passwordController: passwordController,
+          ),
+        ],
+      ),
+    );
   }
 }
 
 class Fondo extends StatelessWidget {
-  const Fondo({super.key});
+  const Fondo({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-          gradient: LinearGradient(
-        colors: [
-          Color.fromARGB(255, 125, 190, 243),
-          Colors.blue,
-        ],
-        begin: Alignment.centerRight,
-        end: Alignment.centerLeft,
-      )),
+        gradient: LinearGradient(
+          colors: [
+            Color.fromARGB(255, 125, 190, 243),
+            Colors.blue,
+          ],
+          begin: Alignment.centerRight,
+          end: Alignment.centerLeft,
+        ),
+      ),
     );
   }
 }
 
 class Contenido extends StatefulWidget {
-  const Contenido({super.key});
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+
+  const Contenido({
+    Key? key,
+    required this.emailController,
+    required this.passwordController,
+  }) : super(key: key);
 
   @override
   State<Contenido> createState() => _ContenidoState();
 }
 
 class _ContenidoState extends State<Contenido> {
+  bool showPass = true;
+
   @override
   Widget build(BuildContext context) {
-    return const Padding(
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Login',
+          Text(
+            'Login',
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
@@ -74,7 +94,10 @@ class _ContenidoState extends State<Contenido> {
             ),
           ),
           SizedBox(height: 12),
-          Datos(),
+          Datos(
+            emailController: widget.emailController,
+            passwordController: widget.passwordController,
+          ),
           SizedBox(
             height: 15,
           ),
@@ -86,7 +109,14 @@ class _ContenidoState extends State<Contenido> {
 }
 
 class Datos extends StatefulWidget {
-  const Datos({super.key});
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+
+  const Datos({
+    Key? key,
+    required this.emailController,
+    required this.passwordController,
+  }) : super(key: key);
 
   @override
   State<Datos> createState() => _DatosState();
@@ -118,6 +148,7 @@ class _DatosState extends State<Datos> {
             height: 5,
           ),
           TextFormField(
+            controller: widget.emailController,
             keyboardType: TextInputType.emailAddress,
             style: const TextStyle(color: Colors.black, fontSize: 15),
             autofocus: true,
@@ -151,6 +182,7 @@ class _DatosState extends State<Datos> {
             height: 5,
           ),
           TextFormField(
+            controller: widget.passwordController,
             obscureText: showPass,
             style: const TextStyle(color: Colors.black, fontSize: 15),
             cursorColor: Colors.grey,
@@ -170,10 +202,10 @@ class _DatosState extends State<Datos> {
                 hintText: '********',
                 suffixIcon: IconButton(
                   icon: const Icon(Icons.remove_red_eye_outlined),
-                  onPressed: () => {
+                  onPressed: () {
                     setState(() {
-                      showPass == true ? showPass = false : showPass = true;
-                    })
+                      showPass = !showPass;
+                    });
                   },
                 )),
           ),
@@ -191,9 +223,8 @@ class _DatosState extends State<Datos> {
   }
 }
 
-
 class Remember extends StatefulWidget {
-  const Remember({super.key});
+  const Remember({Key? key}) : super(key: key);
 
   @override
   State<Remember> createState() => _RememberState();
@@ -201,6 +232,7 @@ class Remember extends StatefulWidget {
 
 class _RememberState extends State<Remember> {
   bool checked = false;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -212,10 +244,10 @@ class _RememberState extends State<Remember> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5),
           ),
-          onChanged: (value) => {
+          onChanged: (value) {
             setState(() {
-              checked == false ? checked = true : checked = false;
-            }),
+              checked = value!;
+            });
           },
         ),
         const Text('Recordar cuenta', style: TextStyle(fontSize: 15)),
@@ -224,7 +256,7 @@ class _RememberState extends State<Remember> {
           onPressed: () {
             Navigator.pushNamed(context, '/reset_password');
           },
-          child: const Text('Olvidó su contraseña?',
+          child: const Text('¿Olvidó su contraseña?',
             style: TextStyle(fontSize: 12, color: Colors.blue),
           ),
         ),
@@ -234,7 +266,7 @@ class _RememberState extends State<Remember> {
 }
 
 class Botones extends StatelessWidget {
-  const Botones({super.key});
+  const Botones({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -244,14 +276,37 @@ class Botones extends StatelessWidget {
           width: double.infinity,
           height: 50,
           child: ElevatedButton(
-            onPressed: () => {},
+         onPressed: () async {
+  try {
+    var emailController;
+    var passwordController;
+    await FirebaseAuth.instance.signInWithEmailAndPassword(
+      email: emailController.text,
+      password: passwordController.text,
+    );
+    // Usuario inició sesión exitosamente, navega a la siguiente pantalla
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BienvenidoPage()));
+
+  } catch (e) {
+    // Error al iniciar sesión, muestra un mensaje de error al usuario
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text('Error al iniciar sesión. Por favor, verifica tus credenciales.'),
+    ));
+  }
+},
+
+
+
             style: ButtonStyle(
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20))),
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(const Color(0xff142047))),
-            child: const Text('Login',
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+              ),
+              backgroundColor: MaterialStateProperty.all<Color>(const Color(0xff142047)),
+            ),
+            child: const Text(
+              'Login',
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -260,7 +315,8 @@ class Botones extends StatelessWidget {
           height: 25,
           width: double.infinity,
         ),
-        const Text('Or login with',
+        const Text(
+          'Or login with',
           style: TextStyle(color: Color.fromARGB(255, 79, 77, 77)),
         ),
         const SizedBox(
@@ -268,43 +324,53 @@ class Botones extends StatelessWidget {
           width: double.infinity,
         ),
         SizedBox(
-            width: double.infinity,
-            height: 50,
-            child: OutlinedButton(
-                onPressed: () => {},
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20))),
+          width: double.infinity,
+          height: 50,
+          child: OutlinedButton(
+            onPressed: () => {},
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Text(
-                  'Google',
-                  style: TextStyle(
-                      color: Color(0xff142047),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
-                ))),
+              ),
+            ),
+            child: const Text(
+              'Google',
+              style: TextStyle(
+                color: Color(0xff142047),
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+          ),
+        ),
         const SizedBox(
           height: 15,
           width: double.infinity,
         ),
         SizedBox(
-            width: double.infinity,
-            height: 50,
-            child: OutlinedButton(
-                onPressed: () => {},
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                      RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20))),
+          width: double.infinity,
+          height: 50,
+          child: OutlinedButton(
+            onPressed: () => {},
+            style: ButtonStyle(
+              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Text(
-                  'Facebook',
-                  style: TextStyle(
-                      color: Color(0xff142047),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18),
-                ))),
+              ),
+            ),
+            child: const Text(
+              'Facebook',
+              style: TextStyle(
+                color: Color(0xff142047),
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+          ),
+        ),
         const SizedBox(
           height: 30,
           width: double.infinity,
@@ -315,7 +381,7 @@ class Botones extends StatelessWidget {
 }
 
 class _Politicas extends StatelessWidget {
-  const _Politicas({super.key});
+  const _Politicas({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -329,18 +395,22 @@ class _Politicas extends StatelessWidget {
           children: [
             TextButton(
               onPressed: () => {},
-              child: const Text('Leer los',
+              child: const Text(
+                'Leer los',
                 style: TextStyle(
-                    color: Color.fromARGB(255, 232, 232, 232),
-                    fontWeight: FontWeight.bold),
+                  color: Color.fromARGB(255, 232, 232, 232),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
             TextButton(
               onPressed: () => {},
-              child: const Text('Terminos y Condiciones',
+              child: const Text(
+                'Terminos y Condiciones',
                 style: TextStyle(
-                    color: Color.fromARGB(255, 79, 77, 77),
-                    fontWeight: FontWeight.bold),
+                  color: Color.fromARGB(255, 79, 77, 77),
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ],

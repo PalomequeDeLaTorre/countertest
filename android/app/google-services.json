@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "421456839274",
+    "project_id": "loginbd-da00c",
+    "storage_bucket": "loginbd-da00c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421456839274:android:f86d8acabbb49af501c013",
+        "android_client_info": {
+          "package_name": "com.login.countertest"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAyz1chiyoRaD-Lu74MWTva52_IYaUfxwo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

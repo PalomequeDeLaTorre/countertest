@@ -63,6 +63,7 @@ class Contenido extends StatefulWidget {
   State<Contenido> createState() => _ContenidoState();
 }
 
+// En LoginPage dentro del método _ContenidoState build()
 class _ContenidoState extends State<Contenido> {
   bool showPass = true;
 
@@ -102,11 +103,75 @@ class _ContenidoState extends State<Contenido> {
             height: 15,
           ),
           _Politicas(),
+          SizedBox(height: 15), // Agregar un espacio
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text("¿No tienes una cuenta? "),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RegisterPage()),
+                  );
+                },
+                child: Text(
+                  "Regístrate aquí",
+                  style: TextStyle(
+                    color: Colors.blue,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
   }
 }
+
+// Crear la página RegisterPage
+
+class RegisterPage extends StatelessWidget {
+  const RegisterPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Register'),
+      ),
+      body: Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Correo',
+              ),
+            ),
+            TextField(
+              decoration: InputDecoration(
+                labelText: 'Contraseña',
+              ),
+              obscureText: true,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Lógica para registrar un nuevo usuario
+              },
+              child: Text('Registrar'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 
 class Datos extends StatefulWidget {
   final TextEditingController emailController;
